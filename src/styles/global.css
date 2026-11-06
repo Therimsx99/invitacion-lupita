@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/400-italic.css";
+@import "@fontsource/great-vibes/400.css";
+
+@theme {
+  --color-paper: #f7f2e6;
+  --color-ink: #5b4637;
+  --color-brown: #7a5c48;
+  --color-btn: #9a7b66;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Great Vibes", cursive;
+}
+
+html { background: var(--color-paper); scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums;
+  overflow-x: hidden;
+}
+body.locked { overflow: hidden; height: 100dvh; }
+
+.caps { text-transform: uppercase; letter-spacing: 0.22em; }
+.num { font-variant-numeric: lining-nums tabular-nums; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  background: var(--color-btn); color: #f7f2e6;
+  border-radius: 999px; padding: .85rem 2.2rem;
+  text-transform: uppercase; letter-spacing: .24em; font-size: .85rem; font-weight: 500;
+  text-decoration: none; border: 0; cursor: pointer;
+  box-shadow: 0 6px 16px -8px rgba(91, 70, 55, .6);
+  transition: transform .2s ease, background .2s ease;
+}
+.btn:hover { background: #8a6b57; }
+.btn:active { transform: scale(.97); }
+.btn-ghost { background: transparent; color: var(--color-brown); border: 1px solid var(--color-btn); box-shadow: none; }
+.btn-ghost:hover { background: rgba(154,123,102,.12); }
+
+/* Aparición al scroll: solo se ocultan cuando hay JS */
+.js [data-reveal] { opacity: 0; }
+.js [data-hero] { opacity: 0; }
+
+.orn { display: flex; align-items: center; justify-content: center; gap: .8rem; color: var(--color-btn); }
+.orn::before, .orn::after { content: ""; height: 1px; width: 28%; background: currentColor; opacity: .55; }
+
+/* Marco fino como en la invitación original */
+.frame { position: absolute; inset: 14px; border: 1px solid rgba(154,123,102,.45); pointer-events: none; z-index: 2; }
+
+/* Sobre */
+#gate { display: none; }
+.js #gate { display: flex; }
+.env-flap { transform-origin: top center; backface-visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

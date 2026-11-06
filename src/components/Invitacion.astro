@@ -1,0 +1,158 @@
+---
+interface Props {
+  invitado?: { nombre: string; adultos: number; ninos: number };
+}
+const { invitado } = Astro.props;
+
+const MISA_URL =
+  'https://www.google.com/maps/search/?api=1&query=Iglesia%20Ermita%20de%20Ocotlan%2C%20Puebla&query_place_id=ChIJ08NGYVPBz4URdtEGimMIyg8';
+const RECEPCION_URL =
+  'https://www.google.com/maps/search/?api=1&query=Extravagance%20Eventos%2C%20Blvd.%20San%20Felipe%2046%2C%20Puebla&query_place_id=ChIJ_zioDpnBz4URTz-65FtnDkE';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// 12 dic 2026, 18:00 hora de Puebla (UTC-6) => 13 dic 00:00 UTC. Fin: medianoche local.
+const gcal =
+  'https://calendar.google.com/calendar/render?' +
+  new URLSearchParams({
+    action: 'TEMPLATE',
+    text: '75 años de Lupita',
+    dates: '20261213T000000Z/20261213T060000Z',
+    ctz: 'America/Mexico_City',
+    location: 'Iglesia Ermita de Ocotlán, Puebla',
+    details:
+      'Misa 6:00 PM – Iglesia Ermita de Ocotlán\nRecepción 7:00 PM – Salón Magno Extravagance\n\nUna vida llena de historias, amor y hermosos momentos.',
+  }).toString();
+
+const plural = (n: number, s: string, p: string) => `${n} ${n === 1 ? s : p}`;
+const pases = invitado
+  ? [
+      invitado.adultos > 0 ? plural(invitado.adultos, 'Adulto', 'Adultos') : null,
+      invitado.ninos > 0 ? plural(invitado.ninos, 'Niño', 'Niños') : null,
+    ]
+      .filter(Boolean)
+      .join(' · ')
+  : '';
+
+const pin = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>`;
+---
+<main class="relative z-[3]">
+  <!-- HERO -->
+  <section class="min-h-dvh flex flex-col items-center justify-center px-8 pt-36 pb-12 text-center">
+    <p data-hero class="caps text-[.95rem] leading-relaxed text-brown">
+      Con mucha alegría<br />te invitamos a celebrar los
+    </p>
+    <div data-hero class="num font-serif font-medium leading-[.9] text-[#8c6b55] text-[10.5rem] sm:text-[12rem] my-2 min-w-[2ch]">
+      <span id="count75">75</span>
+    </div>
+    <p data-hero class="caps text-[1.15rem] text-brown -mt-1">Años de</p>
+
+    <svg id="lupita" viewBox="0 0 600 230" class="w-[104%] max-w-[470px] -mt-2 overflow-visible" role="img" aria-label="Lupita">
+      <defs>
+        <clipPath id="wipe"><rect id="wipeRect" x="-20" y="-40" width="0" height="320" /></clipPath>
+      </defs>
+      <g clip-path="url(#wipe)">
+        <text id="lupitaStroke" x="300" y="150" text-anchor="middle" font-family="'Great Vibes', cursive" font-size="150"
+          fill="none" stroke="#7a5c48" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="2600" stroke-dashoffset="2600">Lupita</text>
+      </g>
+      <text id="lupitaFill" x="300" y="150" text-anchor="middle" font-family="'Great Vibes', cursive" font-size="150" fill="#7a5c48" opacity="0">Lupita</text>
+    </svg>
+
+    <div data-hero class="orn mt-2 w-full">
+      <svg width="34" height="22" viewBox="0 0 34 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M17 21V9M17 9c-5-1-8-4-8-8 5 0 8 3 8 8zM17 9c5-1 8-4 8-8-5 0-8 3-8 8zM17 14c-4 0-7-2-8-5M17 14c4 0 7-2 8-5"/></svg>
+    </div>
+  </section>
+
+  <!-- FRASE -->
+  <section class="px-10 py-10 text-center" data-reveal>
+    <p class="caps text-[.9rem] leading-[2] text-brown">Una vida llena de historias,<br />amor y hermosos momentos</p>
+    <div class="mx-auto mt-5 h-px w-16 bg-btn/60"></div>
+  </section>
+
+  <!-- CUENTA REGRESIVA -->
+  <section class="px-6 py-10 text-center" data-reveal>
+    <p class="caps text-[.85rem] text-brown mb-5">Faltan</p>
+    <div id="countdown" class="grid grid-cols-4 gap-2 max-w-[340px] mx-auto" data-target="2026-12-12T18:00:00-06:00">
+      {[['d', 'Días'], ['h', 'Horas'], ['m', 'Min'], ['s', 'Seg']].map(([k, l]) => (
+        <div class="border border-btn/50 rounded-xl py-3 bg-paper/60">
+          <div class="num text-[2.1rem] leading-none font-medium text-ink" data-cd={k}>--</div>
+          <div class="caps text-[.62rem] mt-2 text-brown tracking-[.18em]">{l}</div>
+        </div>
+      ))}
+    </div>
+    <p id="cdDone" class="hidden font-script text-4xl text-brown mt-2">¡Hoy es el gran día!</p>
+    <p class="caps text-[.68rem] mt-4 text-brown/80">Sábado 12 de diciembre · 6:00 PM · Puebla</p>
+  </section>
+
+  <!-- MISA -->
+  <section class="px-8 py-10 text-center" data-reveal>
+    <div class="orn mb-8"><span class="text-[.7rem]">✦</span></div>
+    <svg id="iconChurch" class="mx-auto text-ink" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path pathLength="1" d="M32 2v10M27.5 6.5h9" />
+      <path pathLength="1" d="M32 13 42 22v12l12 7v17H10V41l12-7V22z" />
+      <path pathLength="1" d="M27 58V48a5 5 0 0 1 10 0v10" />
+      <circle pathLength="1" cx="32" cy="26" r="3" />
+    </svg>
+    <h2 class="caps text-[1.15rem] mt-3 text-ink font-medium">Misa</h2>
+    <p class="num text-[1.9rem] tracking-[.08em] text-ink leading-tight">6:00 PM</p>
+    <p class="text-[1.35rem] text-ink mb-5">Iglesia Ermita de Ocotlán</p>
+    <a class="btn" href={MISA_URL} target="_blank" rel="noopener" set:html={`${pin}<span>Ver ubicación</span>`}></a>
+  </section>
+
+  <!-- RECEPCIÓN -->
+  <section class="px-8 py-10 text-center" data-reveal>
+    <div class="orn mb-8"><span class="text-[.7rem]">✦</span></div>
+    <svg id="iconGlasses" class="mx-auto text-ink overflow-visible" width="72" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g id="glassL" transform="translate(23 36)">
+        <g class="gl"><path d="M-6-22-5-8Q0 0 5-8L6-22zM0-1V13M-6 14h12" /></g>
+      </g>
+      <g id="glassR" transform="translate(41 36)">
+        <g class="gl"><path d="M-6-22-5-8Q0 0 5-8L6-22zM0-1V13M-6 14h12" /></g>
+      </g>
+      <g class="spark" stroke-width="1.3">
+        <path d="M32 6v8M28 10h8" />
+        <path d="M18 8v4M16 10h4" />
+        <path d="M46 8v4M44 10h4" />
+      </g>
+    </svg>
+    <h2 class="caps text-[1.15rem] mt-3 text-ink font-medium">Recepción</h2>
+    <p class="num text-[1.9rem] tracking-[.08em] text-ink leading-tight">7:00 PM</p>
+    <p class="text-[1.35rem] text-ink mb-5">Salón Magno Extravagance</p>
+    <a class="btn" href={RECEPCION_URL} target="_blank" rel="noopener" set:html={`${pin}<span>Ver ubicación</span>`}></a>
+  </section>
+
+  <!-- FECHA -->
+  <section class="px-8 py-10 text-center" data-reveal>
+    <div class="orn mb-8"><span class="text-[.7rem]">✦</span></div>
+    <p class="caps text-[1.2rem] text-brown">Sábado</p>
+    <p class="caps text-[1.15rem] text-ink mt-1 tracking-[.2em]">12 de diciembre de 2026</p>
+    <div class="mx-auto mt-5 flex items-center justify-center gap-2 text-btn">
+      <span class="h-px w-16 bg-current opacity-60"></span><span class="h-1.5 w-1.5 rounded-full bg-current"></span><span class="h-px w-16 bg-current opacity-60"></span>
+    </div>
+  </section>
+
+  <!-- PERSONALIZADO -->
+  <section class="px-8 py-8 text-center" data-reveal>
+    {invitado ? (
+      <>
+        <p class="caps text-[.8rem] text-brown">Esta invitación es para</p>
+        <p class="font-script text-[2.6rem] leading-tight text-ink mt-2">{invitado.nombre}</p>
+        <p class="caps text-[.8rem] text-brown mt-6">Pases confirmados</p>
+        <p class="text-[1.5rem] text-ink mt-1">{pases}</p>
+      </>
+    ) : (
+      <>
+        <p class="font-script text-[2.4rem] leading-tight text-ink">Será un honor contar contigo</p>
+        <p class="caps text-[.8rem] text-brown mt-3">Te esperamos para celebrar</p>
+      </>
+    )}
+  </section>
+
+  <!-- CALENDARIO -->
+  <section class="px-8 pt-8 pb-44 text-center" data-reveal>
+    <div class="flex flex-col items-center gap-3">
+      <a class="btn" href={`${b}/lupita-75.ics`} download="lupita-75.ics">Agregar al calendario</a>
+      <a class="btn btn-ghost" href={gcal} target="_blank" rel="noopener">Google Calendar</a>
+    </div>
+  </section>
+</main>

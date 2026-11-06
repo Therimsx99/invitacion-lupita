@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Envelope from '../components/Envelope.astro';
+import Invitacion from '../components/Invitacion.astro';
+import invitados from '../data/invitados.json';
+
+export function getStaticPaths() {
+  return invitados.map((i) => ({
+    params: { slug: i.slug },
+    props: { invitado: { nombre: i.nombre, adultos: i.adultos, ninos: i.ninos } },
+  }));
+}
+const { invitado } = Astro.props;
+---
+<Base gate>
+  <Envelope slot="gate" />
+  <Invitacion invitado={invitado} />
+</Base>

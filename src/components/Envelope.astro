@@ -1,0 +1,31 @@
+---
+---
+<div id="gate" class="fixed inset-0 z-50 items-center justify-center bg-paper flex-col px-6" role="dialog" aria-label="Invitación">
+  <div id="gateBox" class="flex flex-col items-center">
+    <p class="gate-line caps text-[.8rem] text-brown mb-8 text-center">Lupita · 75 años</p>
+
+    <button id="envelope" type="button" aria-label="Toca para abrir la invitación"
+      class="relative block w-[min(78vw,320px)] aspect-[1.45/1] cursor-pointer bg-transparent border-0 p-0" style="perspective:900px">
+      <!-- carta -->
+      <div id="letter" class="absolute left-[7%] right-[7%] top-[6%] bottom-[8%] rounded-sm bg-[#fffaf0] border border-btn/30 flex items-start justify-center pt-3 text-center shadow">
+        <span class="font-script text-[2rem] text-brown">Lupita</span>
+      </div>
+      <!-- cuerpo -->
+      <svg class="absolute inset-0 w-full h-full drop-shadow-[0_10px_18px_rgba(91,70,55,.25)]" viewBox="0 0 320 220" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="0" y="0" width="320" height="220" rx="4" fill="#e9dcc3" />
+        <path d="M0 220 160 110 320 220z" fill="#dfcfb2" />
+        <path d="M0 0 160 125 320 0v220H0z" fill="#eadfca" opacity=".0" />
+        <path d="M0 4 130 120M320 4 190 120" stroke="#cdb99a" stroke-width="1" fill="none" />
+      </svg>
+      <!-- solapa -->
+      <svg id="flap" class="env-flap absolute inset-0 w-full h-full" viewBox="0 0 320 220" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 0H320L160 126Z" fill="#f1e7d2" stroke="#cdb99a" stroke-width="1" />
+      </svg>
+      <!-- sello -->
+      <span id="seal" class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 h-[64px] w-[64px] rounded-full grid place-items-center text-paper font-script text-[1.9rem] shadow-lg"
+        style="background:radial-gradient(circle at 35% 30%,#b99a84,#8a6b57 70%)">75</span>
+    </button>
+
+    <p id="tapHint" class="caps text-[.8rem] text-brown mt-10 animate-pulse">Toca para abrir</p>
+  </div>
+</div>
