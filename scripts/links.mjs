@@ -1,8 +1,8 @@
 // Imprime los links completos de todos los invitados.
-// Uso:  SITE_URL=https://therimsx99.github.io/invitacion-lupita npm run links
+// Uso:  SITE_URL=https://invitacion-lupita.vercel.app npm run links
 import { readFileSync } from 'node:fs';
 
-const site = (process.env.SITE_URL || 'https://therimsx99.github.io/invitacion-lupita').replace(/\/+$/, '');
+const site = (process.env.SITE_URL || 'https://invitacion-lupita.vercel.app').replace(/\/+$/, '');
 const invitados = JSON.parse(readFileSync(new URL('../src/data/invitados.json', import.meta.url), 'utf8'));
 
 for (const i of invitados) {

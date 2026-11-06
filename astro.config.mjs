@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 // SITE_URL = URL completa donde vive el sitio (incluye subruta en GitHub Pages)
-const SITE_URL = (process.env.SITE_URL || 'https://therimsx99.github.io/invitacion-lupita').replace(/\/+$/, '');
+const SITE_URL = (process.env.SITE_URL || 'https://invitacion-lupita.vercel.app').replace(/\/+$/, '');
 const u = new URL(SITE_URL);
 
 export default defineConfig({
