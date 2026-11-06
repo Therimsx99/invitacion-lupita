@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Lupita 75//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:lupita-75-20261212@invitaciones
+DTSTAMP:20261101T000000Z
+DTSTART:20261213T000000Z
+DTEND:20261213T060000Z
+SUMMARY:75 años de Lupita
+LOCATION:Iglesia Ermita de Ocotlán\, Puebla
+DESCRIPTION:Misa 6:00 PM - Iglesia Ermita de Ocotlán\nRecepción 7:00 PM - Salón Magno Extravagance\n\nUna vida llena de historias\, amor y hermosos momentos.
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana: 75 años de Lupita
+END:VALARM
+END:VEVENT
+END:VCALENDAR
