@@ -1,6 +1,6 @@
 ---
 interface Props {
-  invitado?: { nombre: string; adultos: number; ninos: number };
+  invitado?: { adultos: number; ninos: number };
 }
 const { invitado } = Astro.props;
 
@@ -135,9 +135,7 @@ const pin = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
   <section class="px-8 py-8 text-center" data-reveal>
     {invitado ? (
       <>
-        <p class="caps text-[.8rem] text-brown">Esta invitación es para</p>
-        <p class="font-script text-[2.6rem] leading-tight text-ink mt-2">{invitado.nombre}</p>
-        <p class="caps text-[.8rem] text-brown mt-6">Pases confirmados</p>
+        <p class="caps text-[.8rem] text-brown">Pases confirmados</p>
         <p class="text-[1.5rem] text-ink mt-1">{pases}</p>
       </>
     ) : (

@@ -7,7 +7,7 @@ import invitados from '../data/invitados.json';
 export function getStaticPaths() {
   return invitados.map((i) => ({
     params: { slug: i.slug },
-    props: { invitado: { nombre: i.nombre, adultos: i.adultos, ninos: i.ninos } },
+    props: { invitado: { adultos: i.adultos, ninos: i.ninos } },
   }));
 }
 const { invitado } = Astro.props;
