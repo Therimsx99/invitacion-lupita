@@ -193,6 +193,8 @@ function gate() {
     if (opened) return;
     opened = true;
     window.scrollTo(0, 0);
+    // El toque en el sobre cuenta como gesto del usuario: el navegador permite iniciar la música.
+    $<HTMLAudioElement>('#bgm')?.play().catch(() => {});
     if (reduce) { finish(); startHero(); return; }
     const tl = gsap.timeline({ onComplete: finish });
     tl.to('#seal', { scale: 0.6, opacity: 0, duration: 0.3, ease: 'power2.in' })
